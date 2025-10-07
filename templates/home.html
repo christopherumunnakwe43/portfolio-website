@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Welcome to My Portfolio</h1>
+  
+  <p>
+    Hello and welcome! I’m <strong>Christopher Umunnakwe</strong>, a Data Analyst passionate about 
+    exploring, analyzing, and visualizing data to uncover meaningful insights.  
+  </p>
+
+  <p>
+    On this website, you’ll find a little about my journey in <strong>data analysis</strong>, 
+    the skills I’ve developed, and some of the work I’m proud of.  
+    I believe data has the power to solve problems and tell compelling stories, 
+    and I love being part of that process.
+  </p>
+
+  <p>
+    Feel free to <a href="{{ url_for('about') }}">learn more about me</a> or 
+    <a href="{{ url_for('contact') }}">get in touch</a> if you’d like to connect.  
+  </p>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>About Me</h1>
+  <p>
+    Hi, I’m <strong>Christopher Umunnakwe</strong> 👋, a passionate and self-driven 
+    <strong>Data Analyst</strong> who enjoys uncovering insights hidden in data.
+  </p>
+
+  <p>
+    I specialize in analyzing and visualizing data using 
+    <strong>Python, Pandas, Matplotlib, NumPy, and SQL</strong>. 
+    I enjoy transforming raw information into clear, actionable insights that help solve 
+    real-world problems.
+  </p>
+
+  <p>
+    I’m constantly improving my skills through hands-on projects and certifications. 
+    Recently, I completed a <strong>Data Analysis certification on FreeCodeCamp</strong>, 
+    which strengthened my ability to handle complex datasets and create meaningful reports.
+  </p>
+
+  <h2>My FreeCodeCamp Certificate</h2>
+  <img src="{{ url_for('static', filename='images/certificate.png') }}" 
+       alt="FreeCodeCamp Certificate" class="certificate">
+
+  <h2>Skills</h2>
+  <ul>
+    <li>Python for Data Analysis (Pandas, NumPy, Matplotlib)</li>
+    <li>Data Visualization & Dashboards</li>
+    <li>SQL for Data Querying</li>
+    <li>Microsoft Excel</li>
+    <li>Basic Machine Learning (in progress)</li>
+  </ul>
+
+  <p>
+    My goal is to grow into a professional Data Analyst role where I can help businesses 
+    make informed, data-driven decisions.
+  </p>
+{% endblock %}
