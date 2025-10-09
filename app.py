@@ -4,43 +4,39 @@ from email.mime.text import MIMEText
 import os
 
 app = Flask(__name__)
-app.secret_key = "secret123"  # for flash messages
+app.secret_key = os.environ.get("SECRET_KEY", "secret123")  # safer
 
-# Home route
 @app.route("/")
 def home():
     return render_template("home.html")
 
-# About page
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-# Contact page
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        message = request.form["message"]
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
 
         try:
             # Prepare email
             msg = MIMEText(f"Message from {name} ({email}):\n\n{message}")
             msg["Subject"] = "New Contact Form Message"
-            msg["From"] = email
-            msg["To"] = os.environ.get("EMAIL_USER")  # send to your Gmail
+            msg["From"] = os.environ.get("EMAIL_USER")
+            msg["To"] = os.environ.get("EMAIL_RECEIVER")  # who receives the mail
 
-            # Connect to Gmail SMTP
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(os.environ.get("EMAIL_USER"), os.environ.get("EMAIL_PASS"))
-            server.sendmail(email, os.environ.get("EMAIL_USER"), msg.as_string())
-            server.quit()
+            # Send email
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                server.starttls()
+                server.login(os.environ.get("EMAIL_USER"), os.environ.get("EMAIL_PASS"))
+                server.send_message(msg)
 
-            flash("✅ Thank you! Your message has been sent.", "success")
+            flash("✅ Thank you! Your message has been sent successfully.", "success")
         except Exception as e:
-            flash("❌ Oops! Something went wrong.", "danger")
+            flash("❌ Internal error while sending your message.", "danger")
             print("Error:", e)
 
         return redirect(url_for("contact"))
@@ -48,5 +44,4 @@ def contact():
     return render_template("contact.html")
 
 if __name__ == "__main__":
-    # Bind to port 0.0.0.0 for Heroku
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
